@@ -89,7 +89,6 @@ public:
         }
         if(head->next == NULL){
             return pop_front();
-
         }
         else{
             Node* temp = head;
