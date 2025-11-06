@@ -45,7 +45,6 @@ public:
     void push(int value,int index) {
         if(head == NULL){
             push_front(value);
-            size++;
             return;
         }
         Node*temp = head;
@@ -63,6 +62,34 @@ public:
         temp->next = node;//connection:node before newlynode to newlynode
         size++;
     }
+    int pop_back (){
+        if(head->next == NULL){
+            return pop_first();
+        }
+        Node* temp = tail;
+        int val = temp->value;
+        tail = tail->previous;
+        tail->next = NULL;
+        delete temp;
+        size--;
+        return val;
+    }
+    int pop_first(){
+        if(head->next == NULL){
+            int val = head->value;
+            delete head;
+            head = tail = NULL;
+            size--;
+            return val;
+        }
+        Node* temp = head;
+        int val = temp->value;
+        head = head->next;
+        delete temp;
+        size--;
+        return val;
+
+    }
     void print() {
         Node* temp = head;
         while(temp != NULL){
@@ -70,6 +97,14 @@ public:
             temp = temp->next;
         }
         cout << "End" << endl;
+    }
+    void printrev() {
+        Node* temp = tail;
+        while(temp != NULL){
+            cout << temp->value << "->";
+            temp = temp->previous;
+        }
+        cout << "end" << endl;
     }
 };
 
@@ -79,6 +114,10 @@ int main(){
     dl.push_front(2);
     dl.push_front(3);
     dl.push_front(4);
+    dl.printrev();
     dl.push(10,2);
+    dl.print();
+    dl.pop_first();
+    dl.pop_back();
     dl.print();
 }
