@@ -98,6 +98,20 @@ private:
         int rightHeight = height(node->right);
         return max(leftHeight, rightHeight)+1;
     }
+
+public:
+    int nodeCount() {
+        return nodeCount(root);
+    }
+private:
+    int nodeCount(Node* node) {
+        if(node == NULL){
+            return 0;
+        }
+        int leftNode = nodeCount(node->left);
+        int rightNode = nodeCount(node->right);
+        return leftNode + rightNode + 1;
+    }
 };
 
 int main(){
