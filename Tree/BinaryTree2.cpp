@@ -112,6 +112,19 @@ private:
         int rightNode = nodeCount(node->right);
         return leftNode + rightNode + 1;
     }
+public:
+    int sum() {
+        return sum(root);
+    }
+private:
+    int sum(Node* node) {
+        if(node == NULL){
+            return 0;
+        }
+        int leftSum = sum(node->left);
+        int rightSum = sum(node->right);
+        return leftSum + rightSum + node->value;
+    }
 };
 
 int main(){
@@ -120,7 +133,10 @@ int main(){
     tree.populate();
     cout << "The binary tree is:" << endl;
     tree.display();
+    cout << endl;
+    cout << "Node Count: " << tree.nodeCount() <<  endl;
     cout << "HEight: " << tree.height() << endl;
+    cout<< "Sum of nodes: " << tree.sum() << endl;
     return 0;
 
 }
