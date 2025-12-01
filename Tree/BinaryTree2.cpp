@@ -57,10 +57,13 @@ private:
     }
 
 public:
+
     void display() {
         display(root,0);
     }
-    private:
+
+private:
+
     void display(Node* node, int level){
         if(node == NULL){
             return;
@@ -77,12 +80,33 @@ public:
         }
         display(node->left, level+1);
     }
+
+    //create height(max length from root to leafnode)every node is at height 1
+public:
+
+    int height() {
+        return height(root);
+    }
+
+private:
+
+    int height(Node* node){
+        if(node == NULL){
+            return 0;
+        }
+        int leftHeight = height(node->left);
+        int rightHeight = height(node->right);
+        return max(leftHeight, rightHeight)+1;
+    }
 };
 
 int main(){
+
     Tree tree;
     tree.populate();
     cout << "The binary tree is:" << endl;
     tree.display();
+    cout << "HEight: " << tree.height() << endl;
     return 0;
+
 }
