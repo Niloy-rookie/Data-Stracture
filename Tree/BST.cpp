@@ -101,6 +101,52 @@ private:
         }
     }
 
+private:
+    Node* getInorderSuccessor(Node* node) {
+        Node* temp = node;
+        while(temp && temp->left != NULL){
+            temp = temp->left;
+        }
+        return temp;
+    }
+
+public:
+    Node* deleteNode(int key) {
+        return deleteNode(root,key);
+    }
+private:
+    Node* deleteNode(Node* node,int key) {
+        if(node == NULL){
+            return NULL;
+        }
+        if(key < node->value){
+            node->left = deleteNode(node->left,key);
+        }
+        else if(key > node->value){
+            node->right = deleteNode(node->right,key);
+        }
+        else{
+            //node with only one child or no child
+            if(node->left == NULL){
+                Node* temp = node->right;
+                delete node;
+                return temp;
+            }
+            else if(node->right ==NULL){
+                Node* temp = node->left;
+                delete node;
+                return temp;
+            }
+            //node with two children: get the inorder successor (smallest in the right subtree)
+            else{
+                Node* IS = getInorderSuccessor(node->right);
+                node->value = IS->value;
+                node->right = deleteNode(node->right,IS->value);
+            }
+        }
+        return node;
+    }
+
 public:
     void display(){
         display(root,0);
@@ -147,6 +193,12 @@ int main() {
     cout << "Enter the element to be searched: ";
     cin >> key;
     tree.search(key);
+
+    cout << "Enter the element to be deleted: ";
+    cin >> key;
+    tree.deleteNode(key);
+    cout << "The binary search tree after deletion is:" << endl;
+    tree.display();
     return 0;
 
 }
