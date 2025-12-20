@@ -45,6 +45,51 @@ void preorderUsingStack(Node* root) {
     }
 }
 
+void inorderUsingStack(Node* root) {
+    if(root == NULL){
+        return;
+    }
+
+    stack<Node*> st;
+    while(!st.empty() || root != NULL){
+        while(root != NULL) {
+            st.push(root);
+            root = root->left;
+        }
+        root  = st.top();
+        st.pop();
+        cout << root->value << " ";
+        root = root->right;
+    }
+}
+
+void postOrderusingStack(Node* root) {
+    if(root == NULL){
+        return;    
+    }
+    stack<Node*> st;
+    Node* lastvisited = NULL;
+    while(!st.empty() || root != NULL) {
+        if(root != NULL) {
+            st.push(root);
+            root = root->left;
+        }
+        else{
+            Node* peek = st.top();
+
+            if(peek->right != NULL && lastvisited != peek->right){
+                root = peek->right;
+            }
+            else{
+                cout << peek->value << " ";
+                lastvisited = peek;
+                st.pop(); 
+            }
+        }
+    }
+}
+
+
 void display(Node *node, int level){
     if (node == NULL){
         return;
@@ -79,5 +124,11 @@ int main() {
     preorderUsingStack(root);
     cout << endl << "The binary tree is:" << endl;
     display(root,0);
+    cout << "Inorder Traversal using stack: ";
+    inorderUsingStack(root);
+    cout << endl;
+    cout << "Postorder Traversal using stack: ";
+    postOrderusingStack(root);
+    cout << endl;
     return 0;
 }
