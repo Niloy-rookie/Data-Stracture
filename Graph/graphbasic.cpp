@@ -52,6 +52,27 @@ public:
         }
         cout << endl;
     }
+
+    //Added DFS
+    void DFS() {
+        vector<bool> visited(size,false);
+        for(int i = 1;i < size;i++){
+            if(!visited[i]){
+                DFShelper(i, visited);
+            }
+        }
+        cout << endl;
+    }
+    void DFShelper(int src,vector<bool>&visited) {
+        cout << src << " ";
+        visited[src] = true;
+
+        for(int it:l[src]){
+            if(!visited[it]){
+                DFShelper(it,visited);
+            }
+        }
+    }
 };
 
 int main(){
@@ -63,5 +84,9 @@ int main(){
     g.addNodes(4,5);
 
     //g.print();
+    cout << "BFS: ";
     g.BFS();
+
+    cout << "DFS: ";
+    g.DFS();
 }
