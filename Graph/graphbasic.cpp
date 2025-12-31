@@ -73,6 +73,35 @@ public:
             }
         }
     }
+
+    //undirected graph cycle exist
+    bool isCyclicUndrGraph(int src,int parent,vector<bool>&visited) {
+        visited[src] = true;
+        list<int>neighbor = l[src];//to check immidiate neigbors are visited and are not equal to parent
+
+        for(int it:neighbor){
+            if(!visited[it]){
+                isCyclicUndrGraph(it,src,visited);
+            }
+            else if(it != parent){
+                return true;
+            }
+        }
+        return false;
+    }
+    bool isCyclic() {
+        vector<bool>visited (size,false);
+
+        //incase graph has multiple indibidual graph or cycle
+        for(int i = 1;i < size;i++){
+            if(!visited[i]){
+                if(isCyclicUndrGraph(i,-1,visited)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 };
 
 int main(){
@@ -89,4 +118,12 @@ int main(){
 
     cout << "DFS: ";
     g.DFS();
+    
+    if(g.isCyclic()){
+        cout << "Graph is cyclic"<< endl;
+    }
+    else{
+        cout << "Graph isnt cyclic" << endl;
+    }
+    return 0;
 }
