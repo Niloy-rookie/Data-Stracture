@@ -52,14 +52,16 @@ void inorderUsingStack(Node* root) {
 
     stack<Node*> st;
     while(!st.empty() || root != NULL){
-        while(root != NULL) {
+        if(root != NULL) {
             st.push(root);
             root = root->left;
         }
-        root  = st.top();
-        st.pop();
-        cout << root->value << " ";
-        root = root->right;
+        else{
+            root  = st.top();
+            st.pop();
+            cout << root->value << " ";
+            root = root->right;
+        }
     }
 }
 
